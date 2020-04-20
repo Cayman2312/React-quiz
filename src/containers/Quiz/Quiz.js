@@ -5,6 +5,7 @@ import ActiveQuiz from '../../components/ActiveQuiz/ActiveQuiz';
 class Quiz extends Component {
   state = {
     activeQuestion: 0,
+    answerState: null,
     quiz: [
       {
         question: 'Какого цвета небо?',
@@ -32,12 +33,43 @@ class Quiz extends Component {
   };
 
   onAnswerClickHandler = (answerId) => {
-    let active = this.state.activeQuestion;
+    if (this.state.answerState) {
+      if (Object.values(this.state.answerState)[0] === 'success') {
+        return;
+      }
+    }
 
-    if (answerId === this.state.quiz[active].rightAnswerId) {
-      this.setState({ activeQuestion: active + 1 });
+    const active = this.state.activeQuestion;
+    const question = this.state.quiz[active];
+
+    if (answerId === question.rightAnswerId) {
+      this.setState({
+        answerState: {
+          [answerId]: 'success',
+        },
+      });
+
+      const timeout = setTimeout(() => {
+        if (this.isQuizFinished()) {
+          console.log('finished');
+        } else {
+          this.setState({ activeQuestion: active + 1 });
+        }
+        this.setState({ answerState: null });
+        clearTimeout(timeout);
+      }, 1000);
+    } else {
+      this.setState({
+        answerState: {
+          [answerId]: 'error',
+        },
+      });
     }
   };
+
+  isQuizFinished() {
+    return this.state.activeQuestion + 1 === this.state.quiz.length;
+  }
 
   render() {
     return (
@@ -50,6 +82,7 @@ class Quiz extends Component {
             onAnswerClick={this.onAnswerClickHandler}
             quizLength={this.state.quiz.length}
             answerNumber={this.state.activeQuestion + 1}
+            state={this.state.answerState}
           />
         </div>
       </div>
