@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './FinishedQuiz.module.scss';
+import Button from '../UI/Button/Button';
 
 const FinishedQuiz = (props) => {
   let countSuccess = 0;
@@ -24,9 +25,16 @@ const FinishedQuiz = (props) => {
           );
         })}
       </ul>
-      Правильно {countSuccess} из {props.quiz.length}
+      <p className={classes.counter}>
+        Правильно {countSuccess} из {props.quiz.length}
+      </p>
       <div>
-        <button onClick={props.onRetry}>Повторить</button>
+        <Button onClick={props.onRetry} type={'primary'} disabled={false}>
+          Повторить
+        </Button>
+        <Button type={'success'} disabled={false}>
+          Перейти в список тестов
+        </Button>
       </div>
     </div>
   );
