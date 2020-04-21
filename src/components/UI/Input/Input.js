@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import classes from './Input.module.scss';
 
 const Input = (props) => {
@@ -22,6 +22,7 @@ const Input = (props) => {
         type={inputType}
         value={props.value}
         onChange={props.onChange}
+        autoComplete="on"
       ></input>
       {isInvalid(props) ? (
         <span>{props.errorMessage || 'Введите корректное значение'}</span>
