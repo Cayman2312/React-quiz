@@ -12,10 +12,16 @@ class Layout extends React.Component {
     this.setState({ menu: !this.state.menu });
   };
 
+  menuCloseHandler = () => {
+    this.setState({
+      menu: false,
+    });
+  };
+
   render() {
     return (
       <div className={classes.Layout}>
-        <Drawer isOpen={this.state.menu} />
+        <Drawer isOpen={this.state.menu} onClose={this.menuCloseHandler} />
         <MenuToggle
           onToggle={this.loggleMenuHandler}
           isOpen={this.state.menu}
