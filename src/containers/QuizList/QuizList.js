@@ -14,14 +14,6 @@ export default class QuizList extends Component {
     });
   }
 
-  componentDidMount() {
-    axios
-      .get('https://quiz-5af9e.firebaseio.com/quiz.json')
-      .then((response) => {
-        console.log(response);
-      });
-  }
-
   render() {
     return (
       <div className={classes.QuizList}>

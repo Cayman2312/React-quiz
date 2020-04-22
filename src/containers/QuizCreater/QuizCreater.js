@@ -8,6 +8,7 @@ import {
 } from '../../form/formFramework';
 import Input from '../../components/UI/Input/Input';
 import Select from '../../components/UI/Select/Select';
+import axios from 'axios';
 
 function createOptionControl(number) {
   return createControl(
@@ -117,8 +118,22 @@ export default class QuizCreater extends Component {
     });
   };
 
-  createQuizHandler = (e) => {
+  createQuizHandler = async (e) => {
     e.preventDefault();
+    try {
+      await axios.post(
+        'https://quiz-5af9e.firebaseio.com/quizes.json',
+        this.state.quiz
+      );
+      this.setState({
+        quiz: [],
+        isFormValid: false,
+        formControls: createFormControl(),
+        rightAnswerId: 1,
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   submitHandler = (e) => {
