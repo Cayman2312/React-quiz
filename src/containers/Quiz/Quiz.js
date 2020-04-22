@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import classes from './Quiz.module.scss';
 import ActiveQuiz from '../../components/ActiveQuiz/ActiveQuiz';
 import FinishedQuiz from '../../components/FinishedQuiz/FinishedQuiz';
+import axios from '../../axios/axios-quiz';
+import Loader from '../../components/UI/Loader/Loader';
 
 class Quiz extends Component {
   state = {
@@ -9,30 +11,8 @@ class Quiz extends Component {
     isFinished: false,
     activeQuestion: 0,
     answerState: null,
-    quiz: [
-      {
-        question: 'Какого цвета небо?',
-        rightAnswerId: 2,
-        id: 1,
-        answers: [
-          { text: 'Черный', id: 1 },
-          { text: 'Синий', id: 2 },
-          { text: 'Красный', id: 3 },
-          { text: 'Зеленый', id: 4 },
-        ],
-      },
-      {
-        question: 'В каком году основали Санкт-Перербург?',
-        rightAnswerId: 3,
-        id: 2,
-        answers: [
-          { text: '1700', id: 1 },
-          { text: '1702', id: 2 },
-          { text: '1703', id: 3 },
-          { text: '1803', id: 4 },
-        ],
-      },
-    ],
+    quiz: [],
+    loading: true,
   };
 
   onAnswerClickHandler = (answerId) => {
@@ -91,8 +71,15 @@ class Quiz extends Component {
     return this.state.activeQuestion + 1 === this.state.quiz.length;
   }
 
-  componentDidMount() {
-    console.log('Quiz ID = ', this.props.match.params.id);
+  async componentDidMount() {
+    try {
+      const response = await axios.get(
+        `quizes/${this.props.match.params.id}.json`
+      );
+      this.setState({ quiz: response.data, loading: false });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   render() {
@@ -106,6 +93,8 @@ class Quiz extends Component {
               quiz={this.state.quiz}
               onRetry={this.retryHandler}
             />
+          ) : this.state.loading ? (
+            <Loader />
           ) : (
             <ActiveQuiz
               question={this.state.quiz[this.state.activeQuestion].question}
