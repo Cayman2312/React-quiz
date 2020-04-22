@@ -6,6 +6,7 @@ import is from 'is_js';
 
 export default class Auth extends Component {
   state = {
+    isFormValid: false,
     formControls: {
       email: {
         value: '',
@@ -34,9 +35,9 @@ export default class Auth extends Component {
     },
   };
 
-  loginHandler = () => {};
+  loginHandler = () => { };
 
-  registerHandler = () => {};
+  registerHandler = () => { };
 
   submitHandler = (e) => {
     e.preventDefault();
@@ -72,6 +73,14 @@ export default class Auth extends Component {
     formControls[controlName] = control;
 
     this.setState({ formControls });
+
+    let isFormValid;
+    isFormValid = Object.values(formControls).every((value) => value.valid);
+
+    if (isFormValid) {
+      this.setState({ isFormValid: true })
+    }
+
   };
 
   renderInputs() {
@@ -106,10 +115,10 @@ export default class Auth extends Component {
           <form className={classes.AuthForm} onSubmit={this.submitHandler}>
             {this.renderInputs()}
 
-            <Button type="success" onClick={this.loginHandler}>
+            <Button type="success" onClick={this.loginHandler} disabled={!this.state.isFormValid}>
               Войти
             </Button>
-            <Button type="primary" onClick={this.registerHandler}>
+            <Button type="primary" onClick={this.registerHandler} disabled={!this.state.isFormValid}>
               Зарегистрироваться
             </Button>
           </form>
