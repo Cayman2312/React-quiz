@@ -9,6 +9,7 @@ export default class Drawer extends Component {
       return (
         <li key={index}>
           <NavLink
+            className={classes.Navlink}
             to={link.to}
             exact={link.exact}
             activeClassName={classes.active}

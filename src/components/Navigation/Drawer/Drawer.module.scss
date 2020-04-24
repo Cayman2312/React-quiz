@@ -23,21 +23,22 @@
 
     & li {
       margin-bottom: 15px;
-
-      & a {
-        color: #363d54;
-        font-size: 30px;
-        text-decoration: none;
-        background-color: #fff;
-        position: relative;
-        padding: 0 20px 10px 20px;
-        transition: opacity 0.3s ease-in;
-
-        &:hover,
-        &.active {
-          opacity: 70%;
-        }
-      }
     }
+  }
+} 
+
+
+.Navlink {
+  color: #363d54;
+  font-size: 30px;
+  text-decoration: none;
+  background-color: #fff;
+  position: relative;
+  padding: 0 20px 10px 20px;
+  transition: opacity 0.3s ease-in;
+
+  &:hover,
+  &.active {
+    opacity: 70%;
   }
 }
