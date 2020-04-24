@@ -68,7 +68,7 @@ export function autoLogin() {
       } else {
         dispatch(authSuccess(token));
         dispatch(
-          autoLogout(expirationDate.getTime() - new Date().getTime() / 1000)
+          autoLogout((expirationDate.getTime() - new Date().getTime()) / 1000)
         );
       }
     }
